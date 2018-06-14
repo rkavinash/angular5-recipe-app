@@ -1,0 +1,43 @@
+<div class="row" >
+  <div class="col">
+      <form [formGroup]="recipeform" (ngSubmit)="onSubmitRecipe()">
+        <div class="row">
+          <div class="col">
+            <label for="name">Recipe Name</label>
+            <input type="text" class="form-control" id="name" formControlName="name">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" formControlName="description">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="imagePath">Image path</label>
+            <input type="text" class="form-control" id="imagePath" formControlName="imagePath" #imagepathref>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <img [src]="imagepathref.value" height="200px" width="200px">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" formArrayName="ingredients">
+            <ul class="list-group" *ngFor="let ingCtrl of recipeform.get('ingredients').controls; let i = index;" [formGroupName]="i">
+              <input type="text" class="form-control" formControlName="name">
+              <input type="number" class="form-control" formControlName="amount">
+              <button type="button" class="btn btn-danger" (click)="onDeleteIngredient(i)">x</button>
+            </ul>
+          </div>
+        </div>
+        <hr>
+        <button type="button" class="btn btn-primary" (click)="onAddIngredient()">Add Ingredient</button>
+        <hr>
+        <button type="submit" class="btn btn-success" [disabled]="!recipeform.valid">Save</button>
+        <button type="button" class="btn btn-primary" (click)="onCancelEditRecipe()">Cancel</button>
+      </form>
+  </div>
+</div>
